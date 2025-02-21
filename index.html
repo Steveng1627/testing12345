@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tycerine - 主页</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f5f6fa;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 300px;
+            padding: 2.5rem;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-title {
+            position: relative;
+            padding-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .game-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .game-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .play-button {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .play-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+            z-index: -1;
+        }
+
+        .play-button:hover::before {
+            transform: translateX(0);
+        }
+
+        .version-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .game-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .game-card {
+                min-height: auto;
+                padding: 1.5rem;
+            }
+
+            .news-section {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .news-card {
+                padding: 1rem;
+            }
+        }
+
+        /* 新闻公告样式 */
+        .news-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .news-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .news-card {
+            padding: 1.5rem;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateX(10px);
+        }
+
+        .news-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .news-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .news-card time {
+            display: block;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .game-card, .news-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .game-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tycerine</h1>
+            <p class="subtitle">创新的策略棋盘游戏</p>
+        </header>
+
+        <div class="game-grid">
+            <div class="game-card">
+                <h2 class="game-title">Tycerine 2.0 <span class="version-tag">最新</span></h2>
+                <p class="game-description">
+                    全新升级的Tycerine，支持AI对战和联机模式。
+                    透过合成棋子获得更强大的单位，用战术布局击败对手。
+                </p>
+                <a href="projects/tycerine/index.html" class="play-button">开始游戏</a>
+            </div>
+
+            <div class="game-card">
+                <h2 class="game-title">Tycerine 1.0</h2>
+                <p class="game-description">
+                    原始版本的Tycerine，简单但富有策略性。
+                    体验最初的游戏玩法，了解游戏的发展历程。
+                </p>
+                <a href="https://wenxu.dev/tycerine/" class="play-button">开始游戏</a>
+            </div>
+
+            <div class="game-card">
+                <h2>Tycerone</h2>
+                <p>命令與策略的完美結合</p>
+                <div class="feature-tags">
+                    <span class="tag">命令系統</span>
+                    <span class="tag">戰術博弈</span>
+                    <span class="tag">全新玩法</span>
+                </div>
+                <a href="projects/tycerone/index.html" class="play-button">
+                    <i class="fas fa-chess-knight"></i>
+                    開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <div class="news-section">
+            <h2>最新公告</h2>
+            <div class="news-card">
+                <h3>Tycerine 2.0 发布</h3>
+                <p>新版本增加了AI对战、联机模式、游戏录像等多项新功能。</p>
+                <time>2024-12-03</time>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            开发者: <a href="https://github.com/Steveng1627" target="_blank">@移动木盒</a> 
+        </p>
+    </footer>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+        
+        let isDark = false;
+        
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                root.style.setProperty('--primary-color', '#1a1a1a');
+                root.style.setProperty('--secondary-color', '#3498db');
+                root.style.setProperty('--background-color', '#2c3e50');
+                root.style.setProperty('--text-color', '#ecf0f1');
+                icon.className = 'fas fa-sun';
+            } else {
+                root.style.setProperty('--primary-color', '#2c3e50');
+                root.style.setProperty('--secondary-color', '#3498db');
+                root.style.setProperty('--background-color', '#f5f6fa');
+                root.style.setProperty('--text-color', '#333');
+                icon.className = 'fas fa-moon';
+            }
+        });
+    </script>
+</body>
+</html> 
